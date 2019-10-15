@@ -90,7 +90,7 @@
                 <div class="col-md-8">
                      @yield('content')
                 </div>
-            </div>
+            </div> 
             @else
             @yield('content')
             @endauth
