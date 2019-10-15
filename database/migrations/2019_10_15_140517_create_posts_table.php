@@ -14,12 +14,14 @@ class CreatePostsTable extends Migration
     public function up()
     {
         Schema::create('posts', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id');
             $table->string('title');
-            $table->string('description');
+            $table->text('description');
             $table->text('content');
             $table->string('image');
-            $table->timestamps('published_at')->nullable();
+            $table->integer('user_id');
+            $table->integer('category_id');
+            $table->timestamp('published_at')->nullable();
             $table->timestamps();
         });
     }
