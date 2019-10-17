@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Posts\CreatePostsRequest;
 use App\Post;
 use Illuminate\Http\Request;
+use Image;
 
 class PostsController extends Controller
 {
@@ -15,7 +16,7 @@ class PostsController extends Controller
      */
     public function index()
     {
-        return view('posts.index')->with('posts',Post::all());
+        return view('posts.index')->with('posts', Post::all());
     }
 
     /**
@@ -38,7 +39,18 @@ class PostsController extends Controller
     {
         // upload the image to store
         // note goto .env and paste 'FILESYSTEM_DRIVER  = public'
-        $image = $request->image->store('posts');
+        if ($request->hasFile('image')) {
+            //insert that image
+            $image = $request->file('image');
+            $img = time() . '.' . $image->getClientOriginalExtension();
+            $location = public_path('images/posts/' . $img);
+            Image::make($image)->save($location);
+        }
+
+        /**
+         * for manually store image
+         * $image = $request->image->store('posts');
+         */
 
         // create the post
         // note add protected fillable in Post model
@@ -46,7 +58,7 @@ class PostsController extends Controller
             'title'         => $request->title,
             'description'   => $request->description,
             'content'       => $request->content,
-            'image'         => $image,
+            'image'         => $img,
             'published_at'  => $request->published_at,
             'category_id'   => 1,
             'user_id'       => 1

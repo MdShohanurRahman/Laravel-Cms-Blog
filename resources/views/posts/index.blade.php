@@ -20,7 +20,10 @@
             <tbody>
                 @foreach ($posts as $post)
                     <tr>
-                        <td>{{$post->image}}</td>
+                        <td>
+                            <img src="{{ asset('images/posts/'. $post->image) }}"
+                                width="50px" height="50px" alt="{{ $post->title }}" >
+                        </td>
                         <td>{{$post->title}}</td>
                         <td>
                             <a href="" class="btn btn-info">Edit</a>

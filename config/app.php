@@ -175,6 +175,11 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /**
+         * Third Party Providers
+         */
+        Intervention\Image\ImageServiceProvider::class,
+
     ],
 
     /*
