@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Posts\CreatePostsRequest;
+use App\Post;
 use Illuminate\Http\Request;
 
 class PostsController extends Controller
@@ -32,9 +34,29 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreatePostsRequest $request)
     {
-        //
+        // upload the image to store
+        // note goto .env and paste 'FILESYSTEM_DRIVER  = public'
+        $image = $request->image->store('posts');
+
+        // create the post
+        // note add protected fillable in Post model
+        Post::create([
+            'title'         => $request->title,
+            'description'   => $request->description,
+            'content'       => $request->content,
+            'image'         => $image,
+            'published_at'  => $request->published_at,
+            'category_id'   => 1,
+            'user_id'       => 1
+        ]);
+
+        // flash the message
+        session()->flash('success', 'post created successfully');
+
+        // redirect user
+        return redirect(route('posts.index'));
     }
 
     /**

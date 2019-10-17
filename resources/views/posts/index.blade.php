@@ -9,7 +9,10 @@
     <div class="card-header">
         Posts
     </div>
-    
+    <div class="card-body">
+
+    </div>
+
 </div>
 
 @endsection
