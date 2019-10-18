@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Posts\CreatePostsRequest;
+use App\Http\Requests\posts\UpdatePostRequest;
 use App\Post;
 use Illuminate\Http\Request;
 use Image;
@@ -89,9 +90,9 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        return view('posts.create')->with('post', $post);
     }
 
     /**
@@ -101,9 +102,36 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePostRequest $request, Post $post)
     {
-        //
+        $data = $request->only(['title', 'description', 'published_at', 'content']);
+
+        // check if new image
+        if ($request->hasFile('image')) {
+
+            // delete old one
+            if (File::exists('images/posts/' . $post->image)) {
+                File::delete('images/posts/' . $post->image);
+            }
+
+            // upload new image
+            $image = $request->file('image');
+            $img = time() . '.' . $image->getClientOriginalExtension();
+            $location = public_path('images/posts/' . $img);
+            Image::make($image)->save($location);
+
+            // assign new image location
+            $data['image'] = $img;
+        }
+
+        // update attributes
+        $post->update($data);
+
+        // flash message
+        session()->flash('success', 'Post updated successfully.');
+
+        // redirect user
+        return redirect(route('posts.index'));
     }
 
     /**
