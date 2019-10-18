@@ -8,6 +8,7 @@
 <div class="card card-default">
     <div class="card-header">Categories</div>
     <div class="card-body">
+        @if ($categories->count()>0)
         <table class="table">
             <thead>
                 <th>Name</th>
@@ -57,6 +58,11 @@
                 @endforeach
             </tbody>
         </table>
+        @else
+        <h3 class="text-center">
+            No category found
+        </h3>
+        @endif
         {{-- <form action="" method="POST" id="deleteCategoryForm">
             @csrf
             @method('DELETE')
