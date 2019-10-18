@@ -6,6 +6,7 @@ use App\Http\Requests\Posts\CreatePostsRequest;
 use App\Post;
 use Illuminate\Http\Request;
 use Image;
+use File;
 
 class PostsController extends Controller
 {
@@ -116,6 +117,10 @@ class PostsController extends Controller
         $post = Post::withTrashed()->where('id', $id)->firstOrFail();
 
         if ($post->trashed()) {
+            // Delete post image
+            if (File::exists('images/posts/' . $post->image)) {
+                File::delete('images/posts/' . $post->image);
+            }
             $post->forceDelete();
         } else {
             $post->delete();
