@@ -8,8 +8,8 @@
 
         @include('partials.error_message')
 
-        <form action="{{ isset($post) ? route('posts.update', $post->id) : route('posts.store') }}"
-            method="POST" enctype="multipart/form-data">
+        <form action="{{ isset($post) ? route('posts.update', $post->id) : route('posts.store') }}" method="POST"
+            enctype="multipart/form-data">
 
             @csrf
 
@@ -25,7 +25,8 @@
 
             <div class="form-group">
                 <label for="description">Description</label>
-                <textarea name="description" id="description" cols="5" rows="5" class="form-control">{{ isset($post) ? $post->description : '' }}</textarea>
+                <textarea name="description" id="description" cols="5" rows="5"
+                    class="form-control">{{ isset($post) ? $post->description : '' }}</textarea>
             </div>
 
             <div class="form-group">
@@ -40,6 +41,22 @@
                     value="{{ isset($post) ? $post->published_at : '' }}">
             </div>
 
+            <div class="form-group">
+                <label for="category_id">Category</label>
+                <select name="category_id" id="category_id" class="form-control">
+                    @foreach($categories as $category)
+                    <option value="{{ $category->id }}" @if(isset($post)) @if($category->id === $post->category_id)
+                        selected
+                        @endif
+                        @endif
+                        >
+                        {{ $category->name }}
+                    </option>
+                    @endforeach
+
+                </select>
+            </div>
+
             @if(isset($post))
             <div class="form-group">
                 <img src="{{ asset('images/posts/'. $post->image) }}" alt="" style="width: 100%">
@@ -52,7 +69,7 @@
 
             <div class="form-group">
                 <button type='submit' class="btn btn-success">
-                     {{ isset($post) ? 'Update Post': 'Create Post' }}
+                    {{ isset($post) ? 'Update Post': 'Create Post' }}
                 </button>
             </div>
 
@@ -73,6 +90,7 @@
     flatpickr('#published_at', {
         enableTime: true
     })
+
 </script>
 @endsection
 
