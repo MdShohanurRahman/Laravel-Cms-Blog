@@ -27,7 +27,6 @@ class CategoriesController extends Controller
     public function create()
     {
         return view('categories.create');
-
     }
 
     /**
@@ -43,7 +42,7 @@ class CategoriesController extends Controller
             'name' => $request->name
         ]);
 
-        session()->flash('success','Category created successfully');
+        session()->flash('success', 'Category created successfully');
         //goto this model and fillable this field
 
         return redirect(route('categories.index'));
@@ -68,7 +67,7 @@ class CategoriesController extends Controller
      */
     public function edit(Category $category)
     {
-        return view('categories.create')->with('category',$category);
+        return view('categories.create')->with('category', $category);
     }
 
     /**
@@ -83,10 +82,10 @@ class CategoriesController extends Controller
         // $category->name = $request->name;
         // $category->save();
         $category->update([
-          'name' => $request->name
+            'name' => $request->name
         ]);
 
-        session()->flash('success','category updated successfully');
+        session()->flash('success', 'category updated successfully');
         return redirect(route('categories.index'));
     }
 
@@ -98,8 +97,12 @@ class CategoriesController extends Controller
      */
     public function destroy(Category $category)
     {
+        if ($category->posts->count() > 0) {
+            session()->flash('errors', 'Category can not deleted because it has some posts');
+            return redirect(route('categories.index'));
+        }
         $category->delete();
-        session()->flash('success','Category deleted successfully');
+        session()->flash('success', 'Category deleted successfully');
 
         return redirect(route('categories.index'));
     }

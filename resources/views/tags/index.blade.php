@@ -7,6 +7,7 @@
 
 <div class="card card-default">
   <div class="card-header">Tags</div>
+
   <div class="card-body">
     @if($tags->count() > 0)
     <table class="table">

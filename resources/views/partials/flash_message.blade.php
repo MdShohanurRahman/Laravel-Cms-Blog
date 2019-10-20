@@ -5,8 +5,8 @@
 @endif
 
 
-@if (session()->has('erron'))
+@if (session()->has('errors'))
 <div class="alert alert-danger">
-    {{session()->get('error')}}
+    {{session()->get('errors')}}
 </div>
 @endif
