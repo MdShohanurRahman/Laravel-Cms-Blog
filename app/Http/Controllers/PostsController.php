@@ -70,7 +70,7 @@ class PostsController extends Controller
             'image'         => $img,
             'published_at'  => $request->published_at,
             'category_id'   => $request->category_id,
-            'user_id'       => 1
+            'user_id'       => auth()->user()->id,
         ]);
 
         if ($request->tags) {
@@ -156,7 +156,7 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id) 
+    public function destroy($id)
     {
         $post = Post::withTrashed()->where('id', $id)->firstOrFail();
 
