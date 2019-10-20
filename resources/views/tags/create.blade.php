@@ -1,17 +1,13 @@
 @extends('layouts.app')
 
 @section('content')
-
-
-    <div class="card card-default">
-        <div class="card-header">
-            {{isset($tag)? 'Edit Category':'Create Category'}}
-        </div>
-        <div class="card-body">
-
-        @include('partials.error_message')
-
-        <form action="{{ isset($tag) ? route('tags.update', $tag->id) : route('tags.store') }}" method="POST">
+<div class="card card-default">
+  <div class="card-header">
+    {{ isset($tag)  ? 'Edit tag' : 'Create tag' }}
+  </div>
+  <div class="card-body">
+    @include('partials.error_message')
+    <form action="{{ isset($tag) ? route('tags.update', $tag->id) : route('tags.store') }}" method="POST">
       @csrf
       @if(isset($tag))
         @method('PUT')
@@ -22,10 +18,10 @@
       </div>
       <div class="form-group">
         <button class="btn btn-success">
-          {{ isset($tag) ? 'Update Category': 'Add Category' }}
+          {{ isset($tag) ? 'Update tag': 'Add tag' }}
         </button>
       </div>
     </form>
-        </div>
-    </div>
+  </div>
+</div>
 @endsection
