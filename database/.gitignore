@@ -1,4 +1,4 @@
 *.sqlite
 *.sqlite-journal
-images
-posts
+/public/images
+/theme
