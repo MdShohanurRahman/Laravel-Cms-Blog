@@ -11,10 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+use App\Http\Controllers\Blog\PostController;
+use App\Post;
 
+Route::get('/', 'WelcomeController@index')->name('welcome');
+Route::get('/blog/posts/{post}', 'Blog\PostController@show')->name('blog.show');
+// Route::get('blog/posts/{post}', [PostsController::class, 'show'])->name('blog.show');
 Auth::routes();
 
 Route::middleware(['auth'])->group(function () {
