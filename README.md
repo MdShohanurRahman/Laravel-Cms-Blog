@@ -41,7 +41,7 @@ cd Laravel-Cms-Blog
 Finally, run the development server:
 
 ```bash
-php arisan serve
+php artisan serve
 ```
 
 The project will be available at **127.0.0.1:8000**.
